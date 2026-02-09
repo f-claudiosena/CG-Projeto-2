@@ -1,54 +1,77 @@
-# WebGL FPS: Survival Arena - O Desafio do Patriota
+# WebGL FPS: Survival Arena - O Desafio do Patriota 🇧🇷
 
-Um jogo de tiro em primeira pessoa (FPS) desenvolvido puramente em **WebGL2** e **JavaScript (Vanilla)**, sem o uso de engines pesadas como Unity ou Three.js. O jogo apresenta mecânicas de física, áudio 3D espacial e renderização de modelos 3D externos.
+Um jogo de tiro em primeira pessoa (FPS) desenvolvido **do zero** utilizando **WebGL 2.0** e **JavaScript (Vanilla)**. Este projeto demonstra um motor gráfico customizado sem o uso de bibliotecas de alto nível (como Three.js ou Unity), focando na implementação manual de shaders GLSL, física e matemática vetorial.
 
-![Screenshot](screenshot_placeholder.jpg)
+![Status do Projeto](https://img.shields.io/badge/Status-Desenvolvimento-green) ![WebGL](https://img.shields.io/badge/WebGL-2.0-blue)
 
-## 🎮 Como Jogar
+## 🌟 Novas Funcionalidades Gráficas (Update Recente)
 
-1.  **Objetivo:** Sobreviva às ondas de inimigos e acumule pontos.
-2.  **Controles:**
-    * **W, A, S, D:** Movimentar o personagem.
-    * **Mouse:** Olhar ao redor.
-    * **Clique Esquerdo (Segurar):** Carregar o tiro.
-    * **Soltar Clique:** Atirar.
-3.  **Mecânicas de Tiro:**
-    * **Tiro Normal (Amarelo):** Dano básico. Mata inimigos normais. Some ao impactar.
-    * **Tiro Forte (Vermelho):** Carregue a barra ao máximo. Causa dano em chefes e **atravessa** inimigos normais, matando vários de uma vez.
-4.  **Pontuação:**
-    * Inimigo Normal: **10 pontos**.
-    * Super Chefe: **50 pontos**.
-    * *O Chefe começa a aparecer após 100 pontos.*
+O motor gráfico foi atualizado para suportar técnicas de renderização avançadas:
 
-## 🛠️ Tecnologias Utilizadas
+* **🌤️ Skybox (Cubemap):** Renderização de ambiente cúbico para criar um céu imersivo.
+* **🌓 Ciclo Dia & Noite Dinâmico:** O sol e a lua orbitam a cena, alterando a cor da luz ambiente, a direção das sombras e a tonalidade do céu (tint) em tempo real.
+* **💡 Iluminação Phong:** Implementação completa do modelo de iluminação Phong (Componentes Ambiental, Difusa e Especular) nos Fragment Shaders.
+* **🌑 Shadow Mapping:** Sombras dinâmicas projetadas em tempo real baseadas na posição dos corpos celestes.
+* **🧱 Normal Mapping:** Cálculo de perturbação de normais via derivadas (`dFdx`, `dFdy`) para adicionar detalhes de relevo nas superfícies sem aumentar a geometria.
+* **🎨 Suporte a Materiais (.MTL):** O loader agora interpreta arquivos `.mtl` para aplicar cores e texturas específicas aos modelos `.obj`.
 
-* **WebGL 2.0:** Para renderização gráfica de alta performance diretamente na GPU.
-* **GLSL (Shader Language):** Shaders personalizados para iluminação Phong e mapeamento de sombras (Shadow Mapping).
-* **JavaScript (ES6+):** Lógica de jogo, física de colisão (AABB e Esfera), e gerenciamento de áudio.
-* **gl-matrix:** Biblioteca matemática leve para operações de vetores e matrizes.
+## 🎮 Gameplay e Mecânicas
 
-## 📂 Estrutura de Arquivos
+1.  **Objetivo:** Sobreviva a ondas infinitas de inimigos e alcance a maior pontuação possível.
+2.  **Arma (Faca de Arremesso):**
+    * O jogador empunha uma faca tática modelada em 3D.
+    * **Mecânica de Carga:** Segure o clique esquerdo para carregar a força do arremesso.
+    * **Física de Projéteis:** Os disparos sofrem ação da gravidade e colidem com o cenário.
+3.  **Inimigos:**
+    * Inteligência artificial básica que persegue o jogador.
+    * Diferentes tipos: Normal, Mini (Rápido) e Super Chefe (Lento e Resistente).
+4.  **Sistema de Vida e Score:** Persistência de recordes via `localStorage`.
 
-Para que o jogo funcione corretamente, sua pasta deve conter **exatamente** estes arquivos:
+## 🕹️ Controles
+
+| Tecla / Ação | Função |
+| :--- | :--- |
+| **W, A, S, D** | Movimentação do Personagem |
+| **Mouse** | Olhar / Mirar |
+| **Clique Esquerdo (Segurar)** | Carregar força do disparo |
+| **Clique Esquerdo (Soltar)** | Atirar/Arremessar |
+| **Espaço** | Pular (Física com gravidade) |
+
+## 📂 Estrutura de Arquivos Necessária
+
+Para rodar o jogo, certifique-se de que sua pasta possui a seguinte estrutura e os assets (modelos/texturas) corretos:
 
 ```text
 /
-├── index.html                      # Estrutura da página, UI e Canvas
-├── main.js                         # Código principal (Lógica, WebGL, Física)
-├── README.md                       # Documentação (este arquivo)
+├── index.html                  # Entry point e Interface (HUD)
+├── main.js                     # Lógica principal, Game Loop e WebGL Context
+├── obj-loader.js               # Parser customizado para arquivos .OBJ e .MTL
+├── shaders.js                  # (Opcional se inline no main) Código GLSL
+├── README.md                   # Documentação
 │
-├── ASSETS 3D (Modelos)
-│   ├── cannon.obj                  # Modelo da arma do jogador
-│   ├── tree.obj                    # Modelo das árvores do cenário
-│   └── bolsonaro.obj               # Modelo dos inimigos (Convertido de GLB)
+├── ASSETS 3D (Na raiz)
+│   ├── cannon.obj              # Modelo 3D da Faca/Arma
+│   ├── cannon.mtl              # Material da Faca
+│   ├── tree.obj                # Modelo das árvores
+│   ├── tree.mtl                # Material das árvores
+│   ├── bolsonaro.obj           # Modelo do inimigo
+│   └── heart.obj               # Modelo do item de vida
 │
-├── TEXTURAS (Imagens)
-│   ├── grass.jpg                   # Textura do chão
-│   ├── tree.jpg                    # Textura das árvores
-│   ├── wall.png                    # Textura das paredes (Tijolos)
-│   └── bolsonaro.jpg               # Textura do inimigo
+├── TEXTURAS (Na raiz)
+│   ├── grass.jpg               # Chão
+│   ├── wall.png                # Paredes
+│   ├── bolsonaro.jpg           # Textura do inimigo
+│   ├── tree.jpg                # Textura da árvore
+│   │
+│   └── SKYBOX (Imagens do Céu)
+│       ├── sky_right.jpg
+│       ├── sky_left.jpg
+│       ├── sky_top.jpg
+│       ├── sky_bottom.jpg
+│       ├── sky_front.jpg
+│       └── sky_back.jpg
 │
-└── ÁUDIO (Sons)
-    ├── taok.mp3                    # Fala do inimigo normal
-    ├── ninguem-pega-meu-telefone.mp3 # Fala do chefe (vivo)
-    └── pegaram-meu-telefone.mp3    # Fala do chefe (morrendo)
+└── ÁUDIO (Na raiz)
+    ├── gun-fire.mp3            # Som de disparo
+    ├── taok.mp3                # Som do inimigo
+    └── (outros sons...)

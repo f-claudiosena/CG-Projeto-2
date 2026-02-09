@@ -2,40 +2,81 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <title>WebGL FPS</title>
+    <title>O Patriota 3D</title>
     <style>
-        body { margin: 0; overflow: hidden; background: #000; font-family: sans-serif; user-select: none; }
+        body { margin: 0; overflow: hidden; background: #111; font-family: 'Courier New', Courier, monospace; user-select: none; color: white; }
         canvas { display: block; width: 100vw; height: 100vh; }
         
-        #ui-layer {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-        }
+        /* HUD (Interface de Jogo) */
+        #ui-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; display: none; }
         #crosshair {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 10px; height: 10px; border: 2px solid white; border-radius: 50%;
+            width: 10px; height: 10px; 
+            border: 2px solid white; border-radius: 50%; 
+            box-shadow: 0 0 2px black; /* Sombra leve para contraste */
+            background: transparent;
+        }
+        #score-board {
+            position: absolute; top: 20px; left: 20px; font-size: 24px; font-weight: bold; text-shadow: 2px 2px 0 #000;
         }
         #power-container {
-            position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%);
-            width: 200px; height: 20px; background: rgba(0,0,0,0.5); border: 2px solid white;
-            display: none;
+            position: absolute; bottom: 80px; left: 50%; transform: translateX(-50%);
+            width: 200px; height: 15px; border: 2px solid white; border-radius: 8px;
+            background: rgba(0,0,0,0.5); display: none;
         }
         #power-bar { width: 0%; height: 100%; background: linear-gradient(90deg, yellow, red); }
-        
-        /* NOVO: PLACAR */
-        #score-board {
-            position: absolute; top: 20px; left: 20px;
-            color: yellow; font-size: 24px; font-weight: bold;
-            text-shadow: 2px 2px 0 #000;
+
+        /* TELAS (Menu, Pause, GameOver) */
+        .screen {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); display: flex; flex-direction: column;
+            align-items: center; justify-content: center; z-index: 10;
         }
+        .hidden { display: none !important; }
+        
+        h1 { font-size: 50px; color: #fc0; text-shadow: 0 0 15px #f00; margin-bottom: 20px; }
+        .box { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; width: 300px; text-align: center; border: 1px solid #444; }
+        button {
+            margin-top: 20px; padding: 15px 40px; font-size: 20px; font-family: inherit; font-weight: bold;
+            color: white; background: #0055aa; border: 2px solid #0077cc; cursor: pointer; transition: 0.2s;
+        }
+        button:hover { background: #0077cc; transform: scale(1.05); }
+        ol { text-align: left; padding-left: 40px; }
+        li { margin-bottom: 5px; color: #ddd; }
     </style>
 </head>
 <body>
+
+    <canvas id="glCanvas"></canvas>
+
     <div id="ui-layer">
-        <div id="score-board">PONTOS: 0</div> <div id="crosshair"></div>
+        <div id="score-board">PONTOS: 0</div>
+        <div id="crosshair"></div>
         <div id="power-container"><div id="power-bar"></div></div>
     </div>
-    <canvas id="glCanvas"></canvas>
+
+    <div id="start-screen" class="screen">
+        <h1>O PATRIOTA</h1>
+        <div class="box">
+            <h3>TOP 5 PONTUAÇÕES</h3>
+            <ol id="high-scores-list"><li>---</li></ol>
+        </div>
+        <button id="btn-start">JOGAR</button>
+    </div>
+
+    <div id="pause-screen" class="screen hidden">
+        <h1>PAUSADO</h1>
+        <button id="btn-resume">CONTINUAR</button>
+        <button id="btn-menu" style="background:#444; margin-top:10px;">SAIR</button>
+    </div>
+
+    <div id="gameover-screen" class="screen hidden">
+        <h1 style="color:red">FIM DE JOGO</h1>
+        <h2 id="final-score">Pontuação: 0</h2>
+        <button id="btn-restart">TENTAR DE NOVO</button>
+        <button id="btn-menu-over" style="background:#444; margin-top:10px;">MENU</button>
+    </div>
+
     <script type="module" src="main.js"></script>
 </body>
 </html>
