@@ -1,0 +1,25 @@
+# MTL file - created by a modified js OBJExporter
+
+newmtl Tree.Birch.Leaf.Summer.Mat
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 0.9014848470687866
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.20833486318588257 0.3599926829338074 0.13971951603889465
+Ke 0 0 0
+map_Kd Tree.Birch.Leaf.Summer.Mat.png
+
+newmtl Tree.Birch.Bark.Mat
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 0.8999999761581421
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.4588235318660736 0.4588235318660736 0.4588235318660736
+Ke 0 0 0
+map_Kd Tree.Birch.Bark.Mat.png
