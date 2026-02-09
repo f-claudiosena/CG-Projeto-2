@@ -49,7 +49,7 @@ Para rodar o jogo, certifique-se de que sua pasta possui a seguinte estrutura e 
 ├── shaders.js                  # (Opcional se inline no main) Código GLSL
 ├── README.md                   # Documentação
 │
-├── ASSETS 3D (Na raiz)
+├── assets
 │   ├── cannon.obj              # Modelo 3D da Faca/Arma
 │   ├── cannon.mtl              # Material da Faca
 │   ├── tree.obj                # Modelo das árvores
@@ -57,13 +57,13 @@ Para rodar o jogo, certifique-se de que sua pasta possui a seguinte estrutura e 
 │   ├── bolsonaro.obj           # Modelo do inimigo
 │   └── heart.obj               # Modelo do item de vida
 │
-├── TEXTURAS (Na raiz)
+├── textures
 │   ├── grass.jpg               # Chão
 │   ├── wall.png                # Paredes
 │   ├── bolsonaro.jpg           # Textura do inimigo
 │   ├── tree.jpg                # Textura da árvore
 │   │
-│   └── SKYBOX (Imagens do Céu)
+│   └── skybox
 │       ├── sky_right.jpg
 │       ├── sky_left.jpg
 │       ├── sky_top.jpg
@@ -71,7 +71,10 @@ Para rodar o jogo, certifique-se de que sua pasta possui a seguinte estrutura e 
 │       ├── sky_front.jpg
 │       └── sky_back.jpg
 │
-└── ÁUDIO (Na raiz)
-    ├── gun-fire.mp3            # Som de disparo
-    ├── taok.mp3                # Som do inimigo
-    └── (outros sons...)
+└── sfx
+    ├── gun-fire.mp3                    # Som de disparo
+    ├── taok.mp3                        # Som do inimigo
+    └── ninguem-pega-meu-telefone.mp3   # Som do inimigo maior
+    └── pegaram-meu-telefone.mp3        # Som de morte do inimigo maior
+    └── problema-o-tempo-todo.mp3       # Som do inimigo menor
+    └── canalhas-canalhas.mp3           # Som de morte do inimigo menor

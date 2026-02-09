@@ -182,7 +182,6 @@ function createCubeData() {
     return new Float32Array(v);
 }
 
-// CORREÇÃO: Função createSphereData trazida de volta
 function createSphereData(radius) {
     const lat = 12, lon = 12;
     const v = [];
@@ -449,8 +448,8 @@ class Bolsonaro {
             this.scaleVal = 1.5; 
             this.color = [1.0, 0.5, 0.5];
             this.speed = 0.025 + Math.random() * 0.01;
-            this.audioFile = 'ninguem-pega-meu-telefone.mp3';
-            this.deathSound = 'pegaram-meu-telefone.mp3';
+            this.audioFile = 'sfx/ninguem-pega-meu-telefone.mp3';
+            this.deathSound = 'sfx/pegaram-meu-telefone.mp3';
             this.deathVolume = 0.2;
             this.points = 50;
         } 
@@ -459,8 +458,8 @@ class Bolsonaro {
             this.scaleVal = 0.4;
             this.color = [0.2, 1.0, 0.2];
             this.speed = 0.06 + Math.random() * 0.02;
-            this.audioFile = 'bolsonaro-problema-o-tempo-todo.mp3';
-            this.deathSound = 'canalhas-canalhas.mp3';
+            this.audioFile = 'sfx/problema-o-tempo-todo.mp3';
+            this.deathSound = 'sfx/canalhas-canalhas.mp3';
             this.deathVolume = 0.1;
             this.points = 100;
         }
@@ -469,7 +468,7 @@ class Bolsonaro {
             this.scaleVal = 0.6; 
             this.color = [1.0, 1.0, 1.0];
             this.speed = 0.04 + Math.random() * 0.03;
-            this.audioFile = 'taok.mp3';
+            this.audioFile = 'sfx/taok.mp3';
             this.deathSound = null;
             this.points = 10;
         }
@@ -684,10 +683,9 @@ async function init() {
 
     const shadowProg = createProgram(gl, shadowVsSource, shadowFsSource);
     const mainProg = createProgram(gl, vsSource, fsSource);
-    // NOVO: Programa do Skybox
     const skyboxProg = createProgram(gl, skyboxVs, skyboxFs);
 
-    const treeMaterials = await loadMTL('tree.mtl');
+    const treeMaterials = await loadMTL('assets/tree.mtl');
     const treeTextures = {};
     for(let matName in treeMaterials) {
         if(treeMaterials[matName].map) {
@@ -695,14 +693,14 @@ async function init() {
         }
     }
 
-    const treeGroups = await loadComplexOBJ('tree.obj'); 
-    const cannonData = await loadSimpleOBJ('cannon.obj');
-    const bolsonaroData = await loadSimpleOBJ('bolsonaro.obj');
-    const heartData = await loadSimpleOBJ('heart.obj');
+    const treeGroups = await loadComplexOBJ('assets/tree.obj'); 
+    const cannonData = await loadSimpleOBJ('assets/cannon.obj');
+    const bolsonaroData = await loadSimpleOBJ('assets/bolsonaro.obj');
+    const heartData = await loadSimpleOBJ('assets/heart.obj');
     const celestialData = createHighPolySphere(1.0);  
 
-    // NOVO: Carregar material da faca
-    const knifeMaterials = await loadMTL('cannon.mtl');
+    // Carregar material da faca
+    const knifeMaterials = await loadMTL('assets/cannon.mtl');
     let knifeTex = null;
     let knifeColor = [0.6, 0.6, 0.6]; // Cor padrão se falhar
     // O nome do material no MTL pode variar (ex: "None" ou "Material"), pegamos o primeiro
@@ -716,15 +714,20 @@ async function init() {
     const floorData = createFloorData(100);
     const sphereData = createSphereData(0.2); 
     
-    // NOVO: Textura do Skybox
+    // Texturas do Skybox
     const skyboxTex = loadCubemap(gl, [
-        'sky_right.jpg', 'sky_left.jpg', 'sky_top.jpg', 'sky_bottom.jpg', 'sky_front.jpg', 'sky_back.jpg'
+        '/textures/skybox/sky_right.jpg',
+        '/textures/skybox/sky_left.jpg',
+        '/textures/skybox/sky_top.jpg',
+        '/textures/skybox/sky_bottom.jpg',
+        '/textures/skybox/sky_front.jpg',
+        '/textures/skybox/sky_back.jpg'
     ]);
 
-    const grassTex = loadTexture(gl, 'grass.jpg');
-    const treeTexDefault = loadTexture(gl, 'tree.jpg');
-    const wallTex = loadTexture(gl, 'wall.png'); 
-    const bolsonaroTex = loadTexture(gl, 'bolsonaro.jpg');
+    const grassTex = loadTexture(gl, 'textures/grass.jpg');
+    const treeTexDefault = loadTexture(gl, 'textures/tree.jpg');
+    const wallTex = loadTexture(gl, 'textures/wall.png'); 
+    const bolsonaroTex = loadTexture(gl, 'textures/bolsonaro.jpg');
 
     const shadowFBO = createShadowFramebuffer(gl, 2048); 
     
@@ -838,7 +841,7 @@ async function init() {
             cam.recoil = 0.6; 
             cam.flash = 0.5 + (speed * 0.2);
             
-            const shotSound = new Audio('gun-fire.mp3');
+            const shotSound = new Audio('sfx/gun-fire.mp3');
             shotSound.volume = 0.1;
             
             if (speed >= 2.9) {
