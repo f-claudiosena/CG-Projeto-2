@@ -78,3 +78,36 @@ Para rodar o jogo, certifique-se de que sua pasta possui a seguinte estrutura e 
     └── pegaram-meu-telefone.mp3        # Som de morte do inimigo maior
     └── problema-o-tempo-todo.mp3       # Som do inimigo menor
     └── canalhas-canalhas.mp3           # Som de morte do inimigo menor
+```
+
+## 💡 Como fazer rodar?
+Passo a passo simples:
+1. Clonar o repositório git
+   ```
+   git clone https://github.com/f-claudiosena/CG-Projeto-2.git
+   ```
+2. Acessar a raiz do projeto
+   ```
+   /CG-Projeto-2/
+   ```
+3. Subir o servidor local (utilizamos python no exemplo)
+   ```
+   python -m http.server 8000
+   ```
+4. Agora é só abrir no navegador na porta que subiu o projeto
+   ```
+   http://localhost:8000
+   ```
+5. Agora é só pontuar e se divertir!
+
+## Vídeo de apresentacão do jogo
+```
+https://drive.google.com/file/d/1plNJCiY6wKotMk2PAAWo0i-VCebKiCV4/view?usp=sharing
+```
+
+## 📄 Licença
+Este projeto é fornecido como material educacional.
+
+## 👨‍💻 Autor
+Francisco Cláudio da Silva Sena Filho
+Desenvolvido como trabalho prático de Computação Gráfica.
